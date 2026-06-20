@@ -11,9 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AdminController extends AbstractController
 {
-    /**
-     * @Route("/admin", name="app_admin")
-     */
+    #[Route('/admin', name: 'app_admin')]
     public function index(EntityManagerInterface $entityManager): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
@@ -25,9 +23,7 @@ class AdminController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/admin/product/delete/{id}", name="app_admin_product_delete")
-     */
+    #[Route('/admin/product/delete/{id}', name: 'app_admin_product_delete')]
     public function delete(Product $product, EntityManagerInterface $entityManager): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
@@ -50,19 +46,10 @@ class AdminController extends AbstractController
             $product = new Product();
             $product->setName($request->request->get('name'));
             $product->setPrice($request->request->get('price'));
-            $product->setStock($request->request->get('stock'));
             $product->setSize('XL');
-            $product->setIsFeatured($request->request->has('isFeatured'));
-            
-            // Gestion de l'image
-            $file = $request->files->get('image');
-            if ($file) {
-                $fileName = uniqid() . '.' . $file->guessExtension();
-                $file->move('uploads', $fileName);
-                $product->setImage($fileName);
-            } else {
-                $product->setImage('default.jpg');
-            }
+            $product->setStock($request->request->get('stock'));
+            $product->setIsFeatured(false);
+            $product->setImage('default.jpg');
 
             $entityManager->persist($product);
             $entityManager->flush();
@@ -85,15 +72,6 @@ class AdminController extends AbstractController
             $product->setName($request->request->get('name'));
             $product->setPrice($request->request->get('price'));
             $product->setStock($request->request->get('stock'));
-            $product->setIsFeatured($request->request->has('isFeatured'));
-
-            // Gestion de l'image
-            $file = $request->files->get('image');
-            if ($file) {
-                $fileName = uniqid() . '.' . $file->guessExtension();
-                $file->move('uploads', $fileName);
-                $product->setImage($fileName);
-            }
 
             $entityManager->flush();
 

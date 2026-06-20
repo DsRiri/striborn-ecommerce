@@ -26,10 +26,11 @@
 
     <div class="row">
         {% for product in products %}
-            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+            <div class="col-md-4 mb-4">
                 <div class="card h-100">
-                    <img src="{{ asset('uploads/' ~ product.image) }}" class="card-img-top" alt="{{ product.name }}" style="height:250px;object-fit:cover;">
-                    <div class="card-body">
+                    <!-- SUPPRIME LA HAUTEUR FIXE POUR VOIR L'IMAGE ENTIÈRE -->
+                    <img src="{{ asset('uploads/' ~ product.image) }}" class="card-img-top" alt="{{ product.name }}" style="width:100%; display:block;">
+                    <div class="card-body text-center">
                         <h5 class="card-title">{{ product.name }}</h5>
                         <p class="card-text">{{ product.price|number_format(2, ',', ' ') }} €</p>
                         <a href="{{ path('app_product_show', {id: product.id}) }}" class="btn btn-primary">Voir</a>

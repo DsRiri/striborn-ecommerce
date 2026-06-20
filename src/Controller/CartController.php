@@ -31,9 +31,16 @@ class CartController extends AbstractController
         $cart = $session->get('cart', []);
         $total = 0;
 
-        foreach ($cart as $item) {
-            $total += $item['price'];
+        // Ajouter quantity = 1 pour les anciens produits
+        foreach ($cart as &$item) {
+            if (!isset($item['quantity'])) {
+                $item['quantity'] = 1;
+            }
+            $total += $item['price'] * $item['quantity'];
         }
+
+        // Sauvegarder le panier mis à jour
+        $session->set('cart', $cart);
 
         return $this->render('cart/index.html.twig', [
             'cart' => $cart,
@@ -49,6 +56,7 @@ class CartController extends AbstractController
     {
         $productId = $request->request->get('product_id');
         $size = $request->request->get('size');
+        $quantity = (int) $request->request->get('quantity', 1);
 
         $product = $entityManager->getRepository(Product::class)->find($productId);
 
@@ -60,17 +68,30 @@ class CartController extends AbstractController
         $session = $this->requestStack->getSession();
         $cart = $session->get('cart', []);
 
-        $cart[] = [
-            'product_id' => $product->getId(),
-            'name' => $product->getName(),
-            'price' => $product->getPrice(),
-            'size' => $size,
-        ];
+        // Vérifier si le produit existe déjà (même id + même taille)
+        $found = false;
+        foreach ($cart as &$item) {
+            if ($item['product_id'] == $productId && $item['size'] == $size) {
+                $item['quantity'] += $quantity;
+                $found = true;
+                break;
+            }
+        }
+
+        if (!$found) {
+            $cart[] = [
+                'product_id' => $product->getId(),
+                'name' => $product->getName(),
+                'price' => $product->getPrice(),
+                'size' => $size,
+                'quantity' => $quantity,
+                'image' => $product->getImage(),
+            ];
+        }
 
         $session->set('cart', $cart);
 
         $this->addFlash('success', 'Produit ajouté au panier !');
-
         return $this->redirectToRoute('app_products');
     }
 

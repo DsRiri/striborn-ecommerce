@@ -4,25 +4,34 @@
 
 {% block body %}
     <div class="row">
-        <div class="col-md-6">
-            <img src="{{ asset('uploads/' ~ product.image) }}" class="img-fluid" alt="{{ product.name }}">
+        <div class="col-md-7">
+            <img src="{{ asset('uploads/' ~ product.image) }}" class="img-fluid rounded" alt="{{ product.name }}" style="width:100%;">
         </div>
-        <div class="col-md-6">
+        <div class="col-md-5">
             <h1>{{ product.name }}</h1>
-            <p class="h3">{{ product.price|number_format(2, ',', ' ') }} €</p>
-            
-            <form method="POST" action="{{ path('app_cart_add') }}">
+            <p class="h2 text-primary">{{ product.price|number_format(2, ',', ' ') }} €</p>
+
+            <form method="POST" action="{{ path('app_cart_add') }}" class="mt-4">
                 <div class="mb-3">
-                    <label class="form-label">Taille</label>
-                    <select name="size" class="form-select" required>
+                    <label class="form-label fw-bold">Taille</label>
+                    <select name="size" class="form-select" required style="max-width:200px;">
                         <option value="">Choisir une taille</option>
                         {% for size in sizes %}
                             <option value="{{ size }}">{{ size }}</option>
                         {% endfor %}
                     </select>
                 </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Quantité</label>
+                    <input type="number" name="quantity" value="1" min="1" max="10" class="form-control" style="max-width:100px;">
+                </div>
+
                 <input type="hidden" name="product_id" value="{{ product.id }}">
-                <button type="submit" class="btn btn-success">Ajouter au panier</button>
+
+                <button type="submit" class="btn btn-success btn-lg mt-2">
+                    Ajouter au panier
+                </button>
             </form>
         </div>
     </div>

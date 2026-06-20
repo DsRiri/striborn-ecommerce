@@ -4,19 +4,17 @@
 
 {% block body %}
     <div class="jumbotron text-center">
-        <h1>Bienvenue chez Stubborn</h1>
+        <h1>Stubborn</h1>
         <p class="lead">Don't compromise on your look</p>
-        <p>Piccadilly Circus, London W1J 0DA, Royaume-Uni</p>
-        <hr class="my-4">
     </div>
 
     <h2>Nos produits en vedette</h2>
     <div class="row">
         {% for product in featuredProducts %}
-            <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+            <div class="col-md-4 mb-4">
                 <div class="card h-100">
-                    <img src="{{ asset('uploads/' ~ product.image) }}" class="card-img-top" alt="{{ product.name }}" style="height:250px;object-fit:cover;">
-                    <div class="card-body">
+                    <img src="{{ asset('uploads/' ~ product.image) }}" class="card-img-top" alt="{{ product.name }}" style="width:100%; display:block;">
+                    <div class="card-body text-center">
                         <h5 class="card-title">{{ product.name }}</h5>
                         <p class="card-text">{{ product.price|number_format(2, ',', ' ') }} €</p>
                         {% if app.user %}
@@ -26,5 +24,12 @@
                 </div>
             </div>
         {% endfor %}
+    </div>
+
+    <hr>
+    <div class="text-center mt-4">
+        <p><strong>Stubborn</strong></p>
+        <p>Piccadilly Circus, London W1J 0DA, Royaume-Uni</p>
+        <p class="text-muted">Don't compromise on your look</p>
     </div>
 {% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier un produit - Stubborn{% endblock %}
+
+{% block body %}
+    <h1>Modifier le produit : {{ product.name }}</h1>
+
+    <form method="POST" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-md-4 mb-2">
+                <input type="text" name="name" value="{{ product.name }}" class="form-control" required>
+            </div>
+            <div class="col-md-3 mb-2">
+                <input type="number" name="price" value="{{ product.price }}" class="form-control" step="0.01" required>
+            </div>
+            <div class="col-md-3 mb-2">
+                <input type="number" name="stock" value="{{ product.stock }}" class="form-control" required>
+            </div>
+            <div class="col-md-2 mb-2">
+                <input type="file" name="image" class="form-control">
+            </div>
+            <div class="col-md-3 mb-2">
+                <input type="checkbox" name="isFeatured" value="1" {% if product.isFeatured %}checked{% endif %}> Mettre en avant
+            </div>
+            <div class="col-md-2 mb-2">
+                <button type="submit" class="btn btn-primary">ENREGISTRER</button>
+                <a href="{{ path('app_admin') }}" class="btn btn-secondary">Annuler</a>
+            </div>
+        </div>
+    </form>
+{% endblock %}

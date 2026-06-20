@@ -12,18 +12,26 @@
         <table class="table">
             <thead>
                 <tr>
+                    <th>Image</th>
                     <th>Produit</th>
                     <th>Taille</th>
-                    <th>Prix</th>
+                    <th>Quantité</th>
+                    <th>Prix unitaire</th>
+                    <th>Total</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
                 {% for key, item in cart %}
                     <tr>
+                        <td>
+                            <img src="{{ asset('uploads/' ~ item.image) }}" alt="{{ item.name }}" style="width:80px;height:80px;object-fit:cover;border-radius:5px;">
+                        </td>
                         <td>{{ item.name }}</td>
                         <td>{{ item.size }}</td>
+                        <td>{{ item.quantity }}</td>
                         <td>{{ item.price|number_format(2, ',', ' ') }} €</td>
+                        <td>{{ (item.price * item.quantity)|number_format(2, ',', ' ') }} €</td>
                         <td>
                             <a href="{{ path('app_cart_remove', {key: key}) }}" class="btn btn-danger btn-sm">Supprimer</a>
                         </td>

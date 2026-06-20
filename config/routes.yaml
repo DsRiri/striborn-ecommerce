@@ -38,14 +38,6 @@ app_cart_remove:
     path: /cart/remove/{key}
     controller: App\Controller\CartController::remove
 
-app_admin:
-    path: /admin
-    controller: App\Controller\AdminController::index
-
-app_admin_product_delete:
-    path: /admin/product/delete/{id}
-    controller: App\Controller\AdminController::delete
-
 app_cart_checkout:
     path: /cart/checkout
     controller: App\Controller\CartController::checkout
@@ -57,3 +49,19 @@ app_cart_success:
 app_cart_cancel:
     path: /cart/cancel
     controller: App\Controller\CartController::cancel
+
+app_admin:
+    path: /admin
+    controller: App\Controller\AdminController::index
+
+app_admin_product_delete:
+    path: /admin/product/delete/{id}
+    controller: App\Controller\AdminController::delete
+
+app_admin_product_add:
+    path: /admin/product/add
+    controller: App\Controller\AdminController::add
+
+app_admin_product_edit:
+    path: /admin/product/edit/{id}
+    controller: App\Controller\AdminController::edit
