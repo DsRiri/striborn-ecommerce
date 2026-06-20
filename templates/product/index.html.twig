@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tous nos produits - Stubborn{% endblock %}
+
+{% block body %}
+    <h1>Nos produits</h1>
+
+    <div class="mb-4">
+        <form method="GET" class="row g-3">
+            <div class="col-auto">
+                <label class="form-label">Filtrer par prix :</label>
+            </div>
+            <div class="col-auto">
+                <select name="price_filter" class="form-select" onchange="this.form.submit()">
+                    <option value="">Tous</option>
+                    <option value="10-29" {% if currentFilter == '10-29' %}selected{% endif %}>10 € - 29 €</option>
+                    <option value="29-35" {% if currentFilter == '29-35' %}selected{% endif %}>29 € - 35 €</option>
+                    <option value="35-50" {% if currentFilter == '35-50' %}selected{% endif %}>35 € - 50 €</option>
+                </select>
+            </div>
+            <div class="col-auto">
+                <a href="{{ path('app_home') }}" class="btn btn-secondary">Retour à l'accueil</a>
+            </div>
+        </form>
+    </div>
+
+    <div class="row">
+        {% for product in products %}
+            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                <div class="card h-100">
+                    <img src="{{ asset('uploads/' ~ product.image) }}" class="card-img-top" alt="{{ product.name }}" style="height:250px;object-fit:cover;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text">{{ product.price|number_format(2, ',', ' ') }} €</p>
+                        <a href="{{ path('app_product_show', {id: product.id}) }}" class="btn btn-primary">Voir</a>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <p>Aucun produit trouvé.</p>
+        {% endfor %}
+    </div>
+{% endblock %}

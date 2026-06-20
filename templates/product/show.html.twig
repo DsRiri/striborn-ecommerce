@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ product.name }} - Stubborn{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-6">
+            <img src="{{ asset('uploads/' ~ product.image) }}" class="img-fluid" alt="{{ product.name }}">
+        </div>
+        <div class="col-md-6">
+            <h1>{{ product.name }}</h1>
+            <p class="h3">{{ product.price|number_format(2, ',', ' ') }} €</p>
+            
+            <form method="POST" action="{{ path('app_cart_add') }}">
+                <div class="mb-3">
+                    <label class="form-label">Taille</label>
+                    <select name="size" class="form-select" required>
+                        <option value="">Choisir une taille</option>
+                        {% for size in sizes %}
+                            <option value="{{ size }}">{{ size }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <input type="hidden" name="product_id" value="{{ product.id }}">
+                <button type="submit" class="btn btn-success">Ajouter au panier</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

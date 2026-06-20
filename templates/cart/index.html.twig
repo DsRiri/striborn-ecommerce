@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Panier - Stubborn{% endblock %}
+
+{% block body %}
+    <h1>Mon panier</h1>
+
+    {% if cart is empty %}
+        <p>Votre panier est vide.</p>
+        <a href="{{ path('app_products') }}" class="btn btn-primary">Continuer mes achats</a>
+    {% else %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Produit</th>
+                    <th>Taille</th>
+                    <th>Prix</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for key, item in cart %}
+                    <tr>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.size }}</td>
+                        <td>{{ item.price|number_format(2, ',', ' ') }} €</td>
+                        <td>
+                            <a href="{{ path('app_cart_remove', {key: key}) }}" class="btn btn-danger btn-sm">Supprimer</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <p class="h4">Total : {{ total|number_format(2, ',', ' ') }} €</p>
+
+        <a href="{{ path('app_products') }}" class="btn btn-primary">Continuer mes achats</a>
+        <a href="{{ path('app_cart_checkout') }}" class="btn btn-success">Finaliser ma commande</a>
+    {% endif %}
+{% endblock %}

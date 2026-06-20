@@ -1,0 +1,59 @@
+app_home:
+    path: /
+    controller: App\Controller\HomeController::index
+
+app_login:
+    path: /login
+    controller: App\Controller\SecurityController::login
+
+app_logout:
+    path: /logout
+    controller: App\Controller\SecurityController::logout
+
+app_register:
+    path: /register
+    controller: App\Controller\RegistrationController::register
+
+app_verify_email:
+    path: /verify/email
+    controller: App\Controller\RegistrationController::verifyUserEmail
+
+app_products:
+    path: /products
+    controller: App\Controller\ProductController::index
+
+app_product_show:
+    path: /product/{id}
+    controller: App\Controller\ProductController::show
+
+app_cart:
+    path: /cart
+    controller: App\Controller\CartController::index
+
+app_cart_add:
+    path: /cart/add
+    controller: App\Controller\CartController::add
+
+app_cart_remove:
+    path: /cart/remove/{key}
+    controller: App\Controller\CartController::remove
+
+app_admin:
+    path: /admin
+    controller: App\Controller\AdminController::index
+
+app_admin_product_delete:
+    path: /admin/product/delete/{id}
+    controller: App\Controller\AdminController::delete
+
+app_cart_checkout:
+    path: /cart/checkout
+    controller: App\Controller\CartController::checkout
+
+app_cart_success:
+    path: /cart/success
+    controller: App\Controller\CartController::success
+
+app_cart_cancel:
+    path: /cart/cancel
+    controller: App\Controller\CartController::cancel
